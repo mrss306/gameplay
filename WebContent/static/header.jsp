@@ -1,12 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<!DOCTYPE>
+<html lang="it">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <title>Header</title>
 </head>
 <body>
-
+    <div style="background-color: indianred">
+        <img src="static/img/logo_placeholder.png" alt="cool logo" height="128px">
+        <label>
+            <input type="text" placeholder="BARRA DI RICERCA">
+        </label>
+    </div>
 </body>
 </html>

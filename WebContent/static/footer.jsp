@@ -2,14 +2,11 @@
 <!DOCTYPE>
 <html lang="it">
 <head>
-    <title>Header</title>
+    <title>Footer</title>
 </head>
 <body>
     <div style="background-color: indianred">
-        <img src="static/img/logo_placeholder.png" alt="cool logo" height="128px">
-        <label>
-            <input type="text" placeholder="BARRA DI RICERCA">
-        </label>
+        <h1>FOOTER</h1>
     </div>
 </body>
 </html>
