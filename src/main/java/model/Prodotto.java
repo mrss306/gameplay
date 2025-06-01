@@ -1,13 +1,15 @@
+
 package model;
 
 public class Prodotto {
 
     /*
-        VARIABILI DI CLASSE
+        ATTRIBUTI
      */
     private String barcode;
     private String nome;
     private float prezzo;
+    private int sconto;
 
 
     /*
@@ -15,10 +17,11 @@ public class Prodotto {
      */
     public Prodotto() {}
 
-    public Prodotto(String barcode, String nome, float prezzo) {
+    public Prodotto(String barcode, String nome, float prezzo, int sconto) {
         this.barcode = barcode;
         this.nome = nome;
         this.prezzo = prezzo;
+        this.sconto = sconto;
     }
 
     /*
@@ -36,6 +39,9 @@ public class Prodotto {
         return prezzo;
     }
 
+    public int getSconto() {
+        return sconto;
+    }
     /*
         SETTERS
      */
@@ -49,5 +55,8 @@ public class Prodotto {
 
     public void setPrezzo(float prezzo) {
         this.prezzo = prezzo;
+    }
+    public void setSconto(int sconto) {
+        this.sconto = sconto;
     }
 }
