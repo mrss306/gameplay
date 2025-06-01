@@ -15,6 +15,7 @@ public class ProdottoBean implements Serializable {
     private String nome;
     private float prezzo;
     private int sconto;
+    private String tipo;
 
 
     /*
@@ -22,11 +23,12 @@ public class ProdottoBean implements Serializable {
      */
     public ProdottoBean() {}
 
-    public ProdottoBean(String barcode, String nome, float prezzo, int sconto) {
+    public ProdottoBean(String barcode, String nome, float prezzo, int sconto, String tipo) {
         this.barcode = barcode;
         this.nome = nome;
         this.prezzo = prezzo;
         this.sconto = sconto;
+        this.tipo = tipo;
     }
 
     /*
@@ -47,9 +49,13 @@ public class ProdottoBean implements Serializable {
     public int getSconto() {
         return sconto;
     }
+    public String getTipo() {
+        return tipo;
+    }
+
     /*
-        SETTERS
-     */
+            SETTERS
+         */
     public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
@@ -63,5 +69,9 @@ public class ProdottoBean implements Serializable {
     }
     public void setSconto(int sconto) {
         this.sconto = sconto;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

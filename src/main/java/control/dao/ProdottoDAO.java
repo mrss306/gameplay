@@ -1,6 +1,6 @@
-package control;
+package control.dao;
 
-import model.UtenteBean;
+import model.ProdottoBean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,10 +13,10 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class UtenteDAO implements IBeanDAO<UtenteBean>{
+public class ProdottoDAO implements IBeanDAO<ProdottoBean> {
     private static DataSource dataSource;
 
-    private static final String TABLE_NAME = "utente";
+    private static final String TABLE_NAME = "prodotto";
 
     //Ottengo la risorsa tramite lookup
     static {
@@ -30,14 +30,14 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
         }
     }
 
-    public UtenteDAO() { /* Costruttore di default senza parametri*/ }
+    public ProdottoDAO() { /* Costruttore di default vuoto e senza parametri */}
 
     @Override
-    public synchronized void doSave(UtenteBean user) throws SQLException {
+    public synchronized void doSave(ProdottoBean product) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String sqlStatement = "INSERT INTO " + UtenteDAO.TABLE_NAME + " (amministratore, username, psw) VALUES (?, ?, ?)";
+        String sqlStatement = "INSERT INTO " + ProdottoDAO.TABLE_NAME + " (barcode, nome, prezzo, sconto, tipo) VALUES (?, ?, ?, ?, ?)";
 
         try{
             //Ottengo la connessione
@@ -46,20 +46,22 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
 
             //Preparo il PreparedStatement
             preparedStatement = connection.prepareStatement(sqlStatement);
-            preparedStatement.setBoolean(1, user.isAdmin());
-            preparedStatement.setString(2, user.getUsername());
-            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(1, product.getBarcode());
+            preparedStatement.setString(2, product.getNome());
+            preparedStatement.setFloat(3, product.getPrezzo());
+            preparedStatement.setInt(4, product.getSconto());
+            preparedStatement.setString(5, product.getTipo());
 
             //Eseguo la query
             preparedStatement.executeUpdate();
             connection.commit();
 
-        //Chiudo la connessione
+            //Chiudo la connessione
         } finally {
             try {
                 if (preparedStatement != null)
                     preparedStatement.close();
-                }
+            }
             finally {
                 if (connection != null)
                     connection.close();
@@ -71,9 +73,10 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
     public boolean doDelete(int code) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        int result = 0;
+        int result;
+        String barcode = Integer.toString(code);
 
-        String sqlStatement = "DELETE FROM " +UtenteDAO.TABLE_NAME+" WHERE codice = ?";
+        String sqlStatement = "DELETE FROM " +ProdottoDAO.TABLE_NAME+" WHERE barcode = ?";
 
         try {
             //Ottengo la connessione
@@ -82,12 +85,12 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
 
             //Preparo il PreparedStatement
             preparedStatement = connection.prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, code);
+            preparedStatement.setString(1, barcode);
 
             //Eseguo la query
             result = preparedStatement.executeUpdate();
             connection.commit();
-        //Chiudo la connessione
+            //Chiudo la connessione
         } finally {
             try {
                 if (preparedStatement != null)
@@ -102,12 +105,13 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
     }
 
     @Override
-    public UtenteBean doRetrieveByKey(int code) throws SQLException {
+    public ProdottoBean doRetrieveByKey(int code) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        UtenteBean utenteBean = new UtenteBean();
+        ProdottoBean prodottoBean = new ProdottoBean();
+        String barcode = Integer.toString(code);
 
-        String sqlStatement = "SELECT * FROM " + UtenteDAO.TABLE_NAME +" WHERE codice = ?";
+        String sqlStatement = "SELECT * FROM " + ProdottoDAO.TABLE_NAME + " WHERE  barcode = ?";
 
         try {
             //Ottengo la connessione
@@ -116,20 +120,20 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
 
             //Preparo il PreparedStatement
             preparedStatement = connection.prepareStatement(sqlStatement);
-            preparedStatement.setInt(1, code);
+            preparedStatement.setString(1, barcode);
 
             //Eseguo la query
             ResultSet resultSet = preparedStatement.executeQuery();
 
             //Salvo il risultato della query nel bean
             while (resultSet.next()) {
-                utenteBean.setCodice(resultSet.getInt("codice"));
-                utenteBean.setUsername(resultSet.getString("username"));
-                utenteBean.setPassword(resultSet.getString("psw"));
-                utenteBean.setAdmin(resultSet.getBoolean("amministratore"));
+                prodottoBean.setNome(resultSet.getString("nome"));
+                prodottoBean.setBarcode(resultSet.getString("barcode"));
+                prodottoBean.setPrezzo(resultSet.getFloat("prezzo"));
+                prodottoBean.setSconto(resultSet.getInt("sconto"));
+                prodottoBean.setTipo(resultSet.getString("tipo"));
             }
-
-        //Chiudo la connessione
+            //Chiudo la connessione
         } finally {
             try {
                 if (preparedStatement != null)
@@ -140,20 +144,20 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
             }
         }
 
-        return utenteBean;
+        return prodottoBean;
     }
 
     @Override
-    public Collection<UtenteBean> doRetrieveAll(String order) throws SQLException {
+    public Collection<ProdottoBean> doRetrieveAll(String order) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Collection<UtenteBean> utenteBeanCollection = new LinkedList<>();
+        Collection<ProdottoBean> prodottoBeanCollection = new LinkedList<>();
 
-        String sqlStatement = "SELECT * FROM " + UtenteDAO.TABLE_NAME;
+        String sqlStatement = "SELECT * FROM " + ProdottoDAO.TABLE_NAME;
 
         //Aggiungo l'ordine in cui devono essere visualizzati i risultati, se disponibile
         if(order != null && !order.equals("")) {
-            sqlStatement += " ORDER BY "+ order;
+            sqlStatement += " ORDER BY "+ order + " DESC";
         }
 
         try {
@@ -169,14 +173,15 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
 
             //Salvo il risultato della query nei bean
             while (resultSet.next()) {
-                UtenteBean utenteBean = new UtenteBean();
-                utenteBean.setCodice(resultSet.getInt("codice"));
-                utenteBean.setUsername(resultSet.getString("username"));
-                utenteBean.setPassword(resultSet.getString("psw"));
-                utenteBean.setAdmin(resultSet.getBoolean("amministratore"));
-                utenteBeanCollection.add(utenteBean);
+                ProdottoBean prodottoBean = new ProdottoBean();
+                prodottoBean.setNome(resultSet.getString("nome"));
+                prodottoBean.setBarcode(resultSet.getString("barcode"));
+                prodottoBean.setPrezzo(resultSet.getFloat("prezzo"));
+                prodottoBean.setSconto(resultSet.getInt("sconto"));
+                prodottoBean.setTipo(resultSet.getString("tipo"));
+                prodottoBeanCollection.add(prodottoBean);
             }
-        //Chiudo la connessione
+            //Chiudo la connessione
         } finally {
             try {
                 if (preparedStatement != null)
@@ -187,6 +192,6 @@ public class UtenteDAO implements IBeanDAO<UtenteBean>{
             }
         }
 
-        return utenteBeanCollection;
+        return prodottoBeanCollection;
     }
 }

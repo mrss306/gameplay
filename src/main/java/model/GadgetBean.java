@@ -7,9 +7,7 @@ public class GadgetBean extends ProdottoBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 
+	/*
         ATTRIBUTI
      */
     private String produttore;
@@ -23,7 +21,7 @@ public class GadgetBean extends ProdottoBean implements Serializable {
     }
 
     public GadgetBean(String barcode, String nome, float prezzo, int sconto, String produttore, String serie) {
-        super(barcode, nome, prezzo, sconto);
+        super(barcode, nome, prezzo, sconto, "gadget");
         this.produttore = produttore;
         this.serie = serie;
     }
