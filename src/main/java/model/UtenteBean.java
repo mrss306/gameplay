@@ -1,8 +1,14 @@
 package model;
 
-public class Utente {
+import java.io.Serializable;
 
-    /*
+public class UtenteBean implements Serializable {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/*
         VARIABILI DI CLASSE
      */
     private int codice;
@@ -13,9 +19,9 @@ public class Utente {
     /*
         COSTRUTTORI
      */
-    public Utente() {}
+    public UtenteBean() {}
 
-    public Utente(int codice, String username, String password, boolean admin) {
+    public UtenteBean(int codice, String username, String password, boolean admin) {
         this.codice = codice;
         this.username = username;
         this.password = password;
@@ -37,15 +43,13 @@ public class Utente {
     public String getPassword() {
         return password;
     }
-
-    public boolean getAdmin() {
+    public boolean isAdmin() {
         return admin;
     }
 
-
     /*
-        SETTERS
-     */
+            SETTERS
+         */
     public void setCodice(int codice) {
         this.codice = codice;
     }

@@ -1,8 +1,15 @@
-
 package model;
 
-public class Gadget extends Prodotto {
-    /*
+import java.io.Serializable;
+
+public class GadgetBean extends ProdottoBean implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 
         ATTRIBUTI
      */
     private String produttore;
@@ -12,10 +19,10 @@ public class Gadget extends Prodotto {
         COSTRUTTORI
      */
 
-    public Gadget() {
+    public GadgetBean() {
     }
 
-    public Gadget(String barcode, String nome, float prezzo, int sconto, String produttore, String serie) {
+    public GadgetBean(String barcode, String nome, float prezzo, int sconto, String produttore, String serie) {
         super(barcode, nome, prezzo, sconto);
         this.produttore = produttore;
         this.serie = serie;

@@ -1,7 +1,13 @@
 package model;
 
-public class PuntoVendita {
-    /*
+import java.io.Serializable;
+
+public class PuntoVenditaBean implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/*
         VARIABILI DI CLASSE
      */
     private int codice;
@@ -13,10 +19,10 @@ public class PuntoVendita {
     /*
         COSTRUTTORI
      */
-    public PuntoVendita() {
+    public PuntoVenditaBean() {
     }
 
-    public PuntoVendita(int codice, String via, String civico, String citta, String provincia) {
+    public PuntoVenditaBean(int codice, String via, String civico, String citta, String provincia) {
         this.codice = codice;
         this.via = via;
         this.civico = civico;

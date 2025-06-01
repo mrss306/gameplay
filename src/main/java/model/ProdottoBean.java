@@ -1,9 +1,14 @@
-
 package model;
 
-public class Prodotto {
+import java.io.Serializable;
 
-    /*
+public class ProdottoBean implements Serializable {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/*
         ATTRIBUTI
      */
     private String barcode;
@@ -15,9 +20,9 @@ public class Prodotto {
     /*
         COSTRUTTORI
      */
-    public Prodotto() {}
+    public ProdottoBean() {}
 
-    public Prodotto(String barcode, String nome, float prezzo, int sconto) {
+    public ProdottoBean(String barcode, String nome, float prezzo, int sconto) {
         this.barcode = barcode;
         this.nome = nome;
         this.prezzo = prezzo;

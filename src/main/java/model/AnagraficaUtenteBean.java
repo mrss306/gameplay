@@ -1,9 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AnagraficaUtente {
-    /*
+public class AnagraficaUtenteBean implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/*
         VARIABILI DI CLASE
      */
     private String codiceFiscale;
@@ -15,10 +20,10 @@ public class AnagraficaUtente {
     /*
         COSTRUTTORI
      */
-    public AnagraficaUtente() {
+    public AnagraficaUtenteBean() {
     }
 
-    public AnagraficaUtente(String codiceFiscale, String nome, String cognome, Date dataDiNascita, String sesso) {
+    public AnagraficaUtenteBean(String codiceFiscale, String nome, String cognome, Date dataDiNascita, String sesso) {
         this.codiceFiscale = codiceFiscale;
         this.nome = nome;
         this.cognome = cognome;
